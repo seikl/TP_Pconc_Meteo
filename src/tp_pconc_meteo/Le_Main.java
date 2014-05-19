@@ -10,7 +10,7 @@ package tp_pconc_meteo;
  *
  * @author skl
  */
-public class TP_PConc_Meteo {
+public class Le_Main {
     /**
      * @param args the command line arguments
      */

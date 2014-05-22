@@ -26,7 +26,7 @@ public class Temperature extends Thread{
       { 
         while( !isInterrupted() )
         { 
-          noZoneConcernee.ecrirePhenomene();
+          noZoneConcernee.ecrireTemperature();
           sleep(2000);
         }
       }

@@ -19,7 +19,7 @@ public class SC_Temperature extends Thread {
       { 
         while( !isInterrupted() )
         { 
-          noZoneConcernee.lirePhenomene();
+          noZoneConcernee.lireTemperature();
           sleep(500);
         }
       }

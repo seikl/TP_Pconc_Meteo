@@ -8,23 +8,20 @@ import java.util.Scanner;
  */
 public class Le_Main {
     
-    static Scanner clavier = new Scanner(System.in);    
-    static int periode=24; // période commune à tous les phénomènes et zones 
+    static Scanner clavier = new Scanner(System.in);
     
+    static int periode=24; // période commune à tous les phénomènes et zones
+
     public static void main(String[] args) {
-        
-        //on inscrit la période pour les phénomènes
-        Temperature.periode = periode;
-        
-        
         System.out.println("hello world!");
 
         //création d'une zone
-        Zones lesZones = new Zones();
+        Zones zone1 = new Zones();
+        zone1.setNoZone(1);
         
         //création des Threads température et SC qui partageront une ou plusieurs zones
-        Temperature temperature = new Temperature(lesZones);
-        SC_Temperature sc_temperature = new SC_Temperature(lesZones);
+        Temperature temperature = new Temperature(zone1);
+        SC_Temperature sc_temperature = new SC_Temperature(zone1);
         
         temperature.start();
         sc_temperature.start();        

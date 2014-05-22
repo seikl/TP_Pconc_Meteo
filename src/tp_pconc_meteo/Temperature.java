@@ -1,40 +1,40 @@
 package tp_pconc_meteo;
 
 /**
- * code insprié du JDemo 136 (Cours de OBI - AprogOO)
+ * code inspiré du JDemo 145 (Cours de O.B. - AprogOO)
  * @author S.Kleber et J.Ithurbide
  */
-public class Temperature extends Phenomenes {
+public class Temperature extends Thread{ 
+        
+    static int ampTemperature = 30;
+    static int offsetTemperature =1; 
+    static int rangTemperature = 1;
+    static int dephasageTemp = 2;
+    static int periode=24;    
+    private Zones noZoneConcernee;
     
-    private int ampTemperature, offsetTemperature, rangTemperature, dephasageTemp, periode;
- 
-    public Temperature(int amp, int offset, int rang, int dephasage, int periode){
-        ampTemperature = amp;
-        offsetTemperature = offset;
-        rangTemperature = rang;
-        dephasageTemp = dephasage;
-        this.periode = periode;
-    }
+    public Temperature(Zones noZone){noZoneConcernee=noZone;}; //objet-membre de type Zones
     
-    synchronized public double Calcul(int temps)
-    {    
+    static public double calculTemperature(int temps) throws InterruptedException
+    {          
         return ampTemperature * Math.sin(2 * 3.14 * temps /periode + dephasageTemp) + offsetTemperature + (Math.random()*rangTemperature - Math.random()*rangTemperature);
-    }
-    
-    
-    synchronized public void run()
-    {
-        try
-        {
-            for (int i = 1; i <= periode; i++)
-            {
-                System.out.println(Calcul(i));
-                Thread.sleep(1000);
-            }
+    }  
+
+    public void run()
+    { 
+      try
+      { 
+        while( !isInterrupted() )
+        { 
+          noZoneConcernee.ecrirePhenomene();
+          sleep(2000);
         }
-        catch(InterruptedException e) {}
-        System.out.println();    
-    
-    
-    }
+      }
+      catch(InterruptedException e)
+      {
+        System.out.println("InterruptedException dans run() de " +
+                           "Temperature !\n");
+        return;
+      }
+    }    
 }

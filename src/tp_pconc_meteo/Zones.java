@@ -6,43 +6,64 @@ package tp_pconc_meteo;
  */
 public class Zones{
     
-    private int noZone;
+    private int tabZones[]={1,2,3,4};
     private int duree=0;
-    private boolean readyToWrite = true; //initialisation à "prêt", donc
+    private boolean readyToWrite[] = {true, true, true, true,}; //initialisation à "prêt", donc
                                         // on commence par le calcul
                                         // du phénomène
     private double temperatureZone;
     
-    public void setNoZone(int noZone){
-        this.noZone = noZone;        
-    }
     
-    
-    public synchronized void ecrirePhenomene() throws InterruptedException{
-    
-        if (readyToWrite){//prête à inscrire un ph.                
+    @SuppressWarnings("empty-statement")
+    public synchronized void ecrirePhenomene() throws InterruptedException{    
+        
+        //Vérification si toutes les zones peuvents recevoir un phénomènes
+        if (readyToWrite[0] &&
+            readyToWrite[1] &&
+            readyToWrite[2] &&
+            readyToWrite[3]){    
+            
             duree++;
             temperatureZone=Temperature.calculTemperature(duree);
-            System.out.println("Une température de " + temperatureZone + " sur la zone " + noZone + " a été inscrite.");
+                        
             //TODO inscrire la température dans un capteur
-            notifyAll();
-            readyToWrite = false;
+            System.out.println("Une température de " + temperatureZone + " a été inscrite sur toutes les zones.");
             
+            readyToWrite[0]=false;
+            readyToWrite[1]=false;
+            readyToWrite[2]=false;
+            readyToWrite[3]=false;
+            
+            System.out.println("Début attente de lecture des capteurs");
+            notifyAll();
         }
         else //pas prête à inscrire un ph.
             wait();                  
     }    
     
     public synchronized void lirePhenomene() throws InterruptedException{
-    
-        if (!readyToWrite){//prête à lire un ph.  
-            System.out.println("La zone (le capteur) " + noZone + " a lu la température.");
-            //TODO le SC lit le capteur
-            notifyAll();
-            readyToWrite = true;            
-        }
-        else //pas prête à lire un phénomène.
-            wait();                  
-    }       
+         
+        int n=0;
+        
+        //parcours en boucle de tous les capteurs jusqu'à ce que toutes les valeurs aient été relevées
+        while (true) {
+            
+            if (n % tabZones.length == 0 && n > 0) n=0;//réinitialisation 
+                        
+            if(!readyToWrite[n]){//prête à lire un ph.  
+
+                //TODO le SC lit le capteur
+                System.out.println("La zone (le capteur) " + n + " a lu la température.");
+
+                readyToWrite[n] = true;  
+                notifyAll();
+
+            }
+            else //pas prête à lire un phénomène.
+                wait();  
+           
+            n++;                    
+        } 
+    }
 
 }

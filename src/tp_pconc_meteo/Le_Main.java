@@ -15,13 +15,12 @@ public class Le_Main {
     public static void main(String[] args) {
         System.out.println("hello world!");
 
-        //création d'une zone
-        Zones zone1 = new Zones();
-        zone1.setNoZone(1);
+        //création des zone
+        Zones lesZones = new Zones();
         
         //création des Threads température et SC qui partageront une ou plusieurs zones
-        Temperature temperature = new Temperature(zone1);
-        SC_Temperature sc_temperature = new SC_Temperature(zone1);
+        Temperature temperature = new Temperature(lesZones);
+        SC_Temperature sc_temperature = new SC_Temperature(lesZones);
         
         temperature.start();
         sc_temperature.start();        

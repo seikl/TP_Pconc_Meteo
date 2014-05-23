@@ -5,19 +5,19 @@ package tp_pconc_meteo;
  * @author S.Kleber et J.Ithurbide
  */
 public class Temperature extends Thread{ 
-        
+            
     static int ampTemperature = 30;
     static int offsetTemperature =1; 
     static int rangTemperature = 1;
-    static int dephasageTemp = 2;
-    static int periode=24;    
+    static int dephasageTemp = 2;   
+    static int temps=0;
     private Zones noZoneConcernee;
     
     public Temperature(Zones noZone){noZoneConcernee=noZone;}; //objet-membre de type Zones
     
-    static public double calculTemperature(int temps) throws InterruptedException
+    public static double calculTemperature() throws InterruptedException
     {          
-        return ampTemperature * Math.sin(2 * 3.14 * temps /periode + dephasageTemp) + offsetTemperature + (Math.random()*rangTemperature - Math.random()*rangTemperature);
+        return ampTemperature * Math.sin(2 * 3.14 * temps /Le_Main.periode + dephasageTemp) + offsetTemperature + (Math.random()*rangTemperature - Math.random()*rangTemperature);
     }  
 
     public void run()
@@ -25,8 +25,9 @@ public class Temperature extends Thread{
       try
       { 
         while( !isInterrupted() )
-        { 
-          noZoneConcernee.ecrirePhenomene();
+        {            
+          noZoneConcernee.ecrirePhenomene(0);
+          temps++;
           sleep(2000);
         }
       }

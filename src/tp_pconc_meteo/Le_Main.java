@@ -8,9 +8,10 @@ import java.util.Scanner;
  */
 public class Le_Main {
     
-    static Scanner clavier = new Scanner(System.in);
-    
-    static int periode=24; // période commune à tous les phénomènes et zones
+    static Scanner clavier = new Scanner(System.in);    
+
+   // période commune à tous les phénomènes et zones    
+    static int periode=24;
 
     public static void main(String[] args) {
         System.out.println("hello world!");

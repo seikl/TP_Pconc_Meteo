@@ -6,7 +6,7 @@ package tp_pconc_meteo;
  */
 public abstract class Phenomenes {
     
-    public abstract double Calculer(int temps);
+    public abstract double Calculer();
  
 
         

@@ -11,7 +11,13 @@ public class SC_Temperature extends Thread {
 
     public SC_Temperature(Zones noZone){noZoneConcernee=noZone;}; //objet-membre de type Zones
     
-    //TODO écrire une méthode pour modifier l'actuateur
+    public static double reglerActuateur(double valSeuil, double valCapteur){
+        
+        if(valCapteur > valSeuil)
+               return valSeuil - valCapteur;
+        else
+                return (valSeuil - valCapteur);
+    }
 
     public void run()
     { 
@@ -19,8 +25,8 @@ public class SC_Temperature extends Thread {
       { 
         while( !isInterrupted() )            
         {         
-            noZoneConcernee.lirePhenomene();
-            sleep(500);              
+            noZoneConcernee.lirePhenomene(0);
+            sleep(1000);              
         }
       }
       catch(InterruptedException e)

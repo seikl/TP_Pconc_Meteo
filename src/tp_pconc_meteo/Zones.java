@@ -10,6 +10,10 @@ public class Zones{
     private double capteurTemperature[]={0., 0., 0., 0.}; 
     private double actuateurTemperature[]={0., 0., 0., 0.}; 
     private double temperatureSeuil=20.;
+    private double capteurPression[]={0., 0., 0., 0.}; 
+    private double actuateurPression[]={0., 0., 0., 0.}; 
+    private int pressionSeuil=1100;
+     
     
     //tableau à 2 dimensions pour le phénomènes et les états des capteurs correspondants
     //NB: Tempéprature=(0), Pression=(1), Humidité=(2), Lumière=(3)
@@ -28,7 +32,8 @@ public class Zones{
     private double lumiereZone;
     
     @SuppressWarnings("empty-statement")
-    public synchronized void ecrirePhenomene(int noPhenomene) throws InterruptedException{    
+    public synchronized void ecrirePhenomene(int noPhenomene) throws InterruptedException
+    {    
         
         
 
@@ -40,7 +45,7 @@ public class Zones{
 
             switch (noPhenomene){
             case 0: 
-                temperatureZone=Temperature.calculTemperature();                        
+                temperatureZone=Temperature.Calculer();                        
                 //inscrire la température dans le capteur correspondant au phénomène            
                 for (int i=0;i<tabZones.length;i++){                                
                     capteurTemperature[i]=temperatureZone;
@@ -48,6 +53,17 @@ public class Zones{
                 System.out.println("-------------------");
                 System.out.println("Une température de " + temperatureZone + " a été envoyée sur toutes les zones.");
                 break;
+            case 1:
+                 pressionZone=Pression.Calculer();                        
+                //inscrire la pression dans le capteur correspondant au phénomène            
+                for (int i=0;i<tabZones.length;i++){                                
+                    capteurTemperature[i]=temperatureZone;
+                }
+                System.out.println("-------------------");
+                System.out.println("Une température de " + temperatureZone + " a été envoyée sur toutes les zones.");
+                break;
+                
+                
             }
             
             readyToWrite[noPhenomene][0]=false;
@@ -80,6 +96,14 @@ public class Zones{
                 else if (actuateurTemperature[n] < 0.){System.out.println("L'actuateur baisse la température de "+ actuateurTemperature[n]);}
                 else {System.out.println("La température est la même qu'avant");}
                 break;
+            case 1:
+                actuateurTemperature[n]= SC_Temperature.reglerActuateur(temperatureSeuil, capteurTemperature[n]);
+                System.out.print("La zone (le capteur) " + (n+1) + " a enregistrée la température.");
+                if (actuateurTemperature[n] > 0.){System.out.println("L'actuateur augmente la température de "+ actuateurTemperature[n]);}
+                else if (actuateurTemperature[n] < 0.){System.out.println("L'actuateur baisse la température de "+ actuateurTemperature[n]);}
+                else {System.out.println("La température est la même qu'avant");}
+                break;
+                
             }
                 readyToWrite[noPhenomene][n] = true;  
                 notifyAll();

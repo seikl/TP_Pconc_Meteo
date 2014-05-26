@@ -4,21 +4,16 @@ package tp_pconc_meteo;
  * code inspiré du JDemo 145 (Cours de O.B. - AprogOO)
  * @author S.Kleber et J.Ithurbide
  */
-public class Temperature extends Thread{ 
+public class Temperature extends Phenomenes{ 
             
     static int ampTemperature = 30;
     static int offsetTemperature =1; 
     static int rangTemperature = 1;
     static int dephasageTemp = 2;   
     static int temps=0;
-    private Zones noZoneConcernee;
+    private RecepteurTemperature recTemp_;
     
-    public Temperature(Zones noZone){noZoneConcernee=noZone;}; //objet-membre de type Zones
-    
-    public static double calculTemperature() throws InterruptedException
-    {          
-        return ampTemperature * Math.sin(2 * 3.14 * temps /Le_Main.periode + dephasageTemp) + offsetTemperature + (Math.random()*rangTemperature - Math.random()*rangTemperature);
-    }  
+    public Temperature(RecepteurTemperature recTemp){recTemp_=recTemp;}; //objet-membre de type Zones
 
     public void run()
     { 
@@ -26,7 +21,18 @@ public class Temperature extends Thread{
       { 
         while( !isInterrupted() )
         {            
-          noZoneConcernee.ecrirePhenomene(0);
+            if(recTemp_.readyToWrite[0]==true &&  
+                    recTemp_.readyToWrite[1]==true &&
+                    recTemp_.readyToWrite[2]==true &&
+                    recTemp_.readyToWrite[3]==true )
+            {
+                
+                recTemp_.temperature = Calculer();
+                recTemp_.readyToWrite[0]=false ;
+                recTemp_.readyToWrite[1]=false ;
+                recTemp_.readyToWrite[2]=false; 
+                recTemp_.readyToWrite[3]=false; 
+            }
           temps++;
           sleep(2000);
         }
@@ -38,4 +44,10 @@ public class Temperature extends Thread{
         return;
       }
     }    
+
+
+    public double Calculer() throws InterruptedException {
+      return ampTemperature * Math.sin(2 * 3.14 * temps /Le_Main.periode + dephasageTemp) + offsetTemperature + (Math.random()*rangTemperature - Math.random()*rangTemperature);
+
+    }
 }

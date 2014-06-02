@@ -19,11 +19,10 @@ public class Le_Main {
         RecepteurPression recPres = new RecepteurPression();
         System.out.println("hello world!");
 
-        //création des zone
-        Zone zone1 = new Zone(1, recTemp);
-        Zone zone3 = new Zone(3, recTemp);
-
-        Zone zone2 = new Zone(2, recTemp);
+        //création des zone (No. de zone, facteur influence, récepteur Temperature)        
+        Zone zone1 = new Zone(1, 0.5, recTemp);
+        Zone zone3 = new Zone(3, 0.5, recTemp);
+        Zone zone2 = new Zone(2, 0.5, recTemp);
 
         
         //création des Threads température et SC qui partageront une ou plusieurs zones

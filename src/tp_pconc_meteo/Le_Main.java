@@ -21,7 +21,11 @@ public class Le_Main {
 
         //création des zone
         Zone zone1 = new Zone(1, recTemp);
+<<<<<<< HEAD
         Zone zone3 = new Zone(3, recTemp);
+=======
+        Zone zone2 = new Zone(2, recTemp);
+>>>>>>> origin/master
         
         //création des Threads température et SC qui partageront une ou plusieurs zones
         

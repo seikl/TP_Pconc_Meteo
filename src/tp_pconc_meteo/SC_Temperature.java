@@ -10,19 +10,19 @@ public class SC_Temperature extends Thread {
     
     private ActuateurTemperature atcuTemp_;
     private CapteurTemperature captTemp_;
+    private double temperatureRequise_;
+    private double tempPiece_;
     
-    public SC_Temperature(ActuateurTemperature actuTemp,CapteurTemperature captTemp)
+    public SC_Temperature(ActuateurTemperature actuTemp,CapteurTemperature captTemp,double temperatureRequise)
     {
         atcuTemp_=actuTemp;
         captTemp_=captTemp;
-    } //objet-membre de type Zone
-    
-    public static double reglerActuateur(double valSeuil, double valCapteur){
+        temperatureRequise_=temperatureRequise; 
         
-        if(valCapteur > valSeuil)
-               return valSeuil - valCapteur;
-        else
-                return (valSeuil - valCapteur);
+    } //objet-membre de type Zone
+    void setTempRequise(double temp)
+    {
+        temperatureRequise_ = temp;
     }
 
     public void run()
@@ -31,7 +31,20 @@ public class SC_Temperature extends Thread {
       { 
         while( !isInterrupted() )            
         {         
-            
+            if(captTemp_.readyToWrite_==false)
+            {
+                //ici on peut aller lite une mise a jour est dispo !
+                tempPiece_=captTemp_.getTemp();
+                if(tempPiece_ > temperatureRequise_)
+                {
+                    
+                }
+                else if (tempPiece_ < temperatureRequise_)
+                {
+                    
+                }
+                captTemp_.readyToWrite_=true;
+            }
             sleep(1000);              
         }
       }

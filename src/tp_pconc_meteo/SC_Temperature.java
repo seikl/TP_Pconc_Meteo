@@ -31,24 +31,22 @@ public class SC_Temperature extends Thread {
       { 
         while( !isInterrupted() )            
         {         
-            if(captTemp_.readyToWrite_[0]==false&&captTemp_.readyToWrite_[1]==false && captTemp_.readyToWrite_[2]==false && captTemp_.readyToWrite_[3]==false)
+            if(captTemp_.readyToWrite_[0]==false || captTemp_.readyToWrite_[1]==false || captTemp_.readyToWrite_[2]==false || captTemp_.readyToWrite_[3]==false)
             {
-                //ici on peut aller lite une mise a jour est dispo !
-                tempPiece_=captTemp_.getTemp();
-                if(tempPiece_ > temperatureRequise_)
+                
+               
+                double delta = tempPiece_ - temperatureRequise_; 
+                //on a environ 30% de rendement pour un chauffage
+                if(atcuTemp_.readyToWrite_[0]==true && atcuTemp_.readyToWrite_[1]==true && atcuTemp_.readyToWrite_[2]==true && atcuTemp_.readyToWrite_[3]==true)
                 {
-                   double delta = tempPiece_ - temperatureRequise_; 
-                   //on a environ 30% de rendement pour un chauffage
-                   if(atcuTemp_.readyToWrite_[0]==true&&atcuTemp_.readyToWrite_[1]==true&&atcuTemp_.readyToWrite_[2]==true&&atcuTemp_.readyToWrite_[3]==true)
-                   {
-                       
-                   }
+
+                     atcuTemp_.readyToWrite_[0]=false;
+                     atcuTemp_.readyToWrite_[1]=false ;
+                     atcuTemp_.readyToWrite_[2]=false ;
+                     atcuTemp_.readyToWrite_[3]=false;
+                }
                    
-                }
-                else if (tempPiece_ < temperatureRequise_)
-                {
-                    
-                }
+              
                 captTemp_.readyToWrite_[0]=true;
                 captTemp_.readyToWrite_[1]=true ;
                 captTemp_.readyToWrite_[2]=true ;

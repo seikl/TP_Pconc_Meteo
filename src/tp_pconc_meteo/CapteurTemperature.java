@@ -13,7 +13,7 @@ package tp_pconc_meteo;
 public class CapteurTemperature {
     
     private SC_Temperature scTemp_;
-    public boolean readyToWrite_ = true;
+    public boolean readyToWrite_[] = {true,true,true,true};  
     private double temp_;
     
     CapteurTemperature()

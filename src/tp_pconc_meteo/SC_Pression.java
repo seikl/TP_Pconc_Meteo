@@ -13,9 +13,9 @@ import static java.lang.Thread.sleep;
  * @author jit
  */
 public class SC_Pression extends Thread{
-      private Zones noZoneConcernee;
+      private Zone noZoneConcernee;
 
-    public SC_Pression(Zones noZone){noZoneConcernee=noZone;}; //objet-membre de type Zones
+    public SC_Pression(Zone noZone){noZoneConcernee=noZone;}; //objet-membre de type Zone
     
     public static double reglerActuateur(double valSeuil, double valCapteur){
         
@@ -31,7 +31,7 @@ public class SC_Pression extends Thread{
       { 
         while( !isInterrupted() )            
         {         
-            noZoneConcernee.lirePhenomene(0);
+           
             sleep(1000);              
         }
       }

@@ -17,7 +17,7 @@ public class Pression extends Thread {
    
     static int rangPression = 2; 
     static int temps=0;
-    private Zones noZoneConcernee;
+    private Zone noZoneConcernee;
     RecepteurPression recPress_;
     
     public Pression(RecepteurPression recPress){recPress_=recPress;}; //objet-membre de type Zones

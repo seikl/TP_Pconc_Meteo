@@ -20,22 +20,15 @@ public class Le_Main {
         System.out.println("hello world!");
 
         //création des zone
-        Zones lesZones = new Zones();
+        Zone zone1 = new Zone(1, recTemp);
         
         //création des Threads température et SC qui partageront une ou plusieurs zones
-        Temperature temperature = new Temperature(recTemp);
-        SC_Temperature sc_temperature = new SC_Temperature(lesZones);
         
-        Pression pression = new Pression(recPres);
-        
-        temperature.start();
-        sc_temperature.start();        
+        Pression pression = new Pression(recPres);           
         
         //appuyer une touche pour arrêter
         clavier.nextLine();
 
-        temperature.interrupt(); 
-        sc_temperature.interrupt();
 
         System.exit(0);        
     }

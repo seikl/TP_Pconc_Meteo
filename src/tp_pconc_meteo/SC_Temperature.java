@@ -7,9 +7,9 @@ import static java.lang.Thread.sleep;
  * @author S.Kleber et J.Ithurbide
  */
 public class SC_Temperature extends Thread {    
-    private Zones noZoneConcernee;
+    private Zone noZoneConcernee;
 
-    public SC_Temperature(Zones noZone){noZoneConcernee=noZone;}; //objet-membre de type Zones
+    public SC_Temperature(Zone noZone){noZoneConcernee=noZone;}; //objet-membre de type Zone
     
     public static double reglerActuateur(double valSeuil, double valCapteur){
         
@@ -25,7 +25,7 @@ public class SC_Temperature extends Thread {
       { 
         while( !isInterrupted() )            
         {         
-            noZoneConcernee.lirePhenomene(0);
+            
             sleep(1000);              
         }
       }

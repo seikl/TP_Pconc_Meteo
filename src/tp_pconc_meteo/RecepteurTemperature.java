@@ -11,13 +11,23 @@ package tp_pconc_meteo;
  * @author jit
  */
 public class RecepteurTemperature {
+    public boolean readyToWrite[] = {true,true,true,true};  
+    private double temperature;
     
-    
-     public RecepteurTemperature()
-     {
+    public RecepteurTemperature()
+    {
          temperature =0;
-     }//objet-membre de type Zones
-     public boolean readyToWrite[] = {true,true,true,true};  
-     public double temperature;
+    }//objet-membre de type Zones
+    
+    public void setTemp (double temp)
+    {
+        temperature = temp;
+    }
+    public double getTemp()
+    {
+        return temperature;
+    }
+    
+
     
 }

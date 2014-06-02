@@ -27,7 +27,7 @@ public class Temperature extends Phenomenes{
                     recTemp_.readyToWrite[3]==true )
             {
                 
-                recTemp_.temperature = Calculer();
+                recTemp_.setTemp(Calculer());
                 recTemp_.readyToWrite[0]=false ;
                 recTemp_.readyToWrite[1]=false ;
                 recTemp_.readyToWrite[2]=false; 

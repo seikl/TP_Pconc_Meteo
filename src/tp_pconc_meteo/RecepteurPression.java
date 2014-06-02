@@ -11,11 +11,20 @@ package tp_pconc_meteo;
  * @author jit
  */
 public class RecepteurPression {
-    
+    public boolean readyToWrite[] = {true,true,true,true};  
+    private double pression;
     RecepteurPression()
     {
         pression=1000;
     }
-    public boolean readyToWrite[] = {true,true,true,true};  
-    public double pression;
+    
+    public void setPression (double pres)
+    {
+        pression = pres;
+    }
+    public double getPression()
+    {
+        return pression;
+    }
+
 }

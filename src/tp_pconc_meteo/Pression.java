@@ -22,11 +22,6 @@ public class Pression extends Thread {
     
     public Pression(RecepteurPression recPress){recPress_=recPress;}; //objet-membre de type Zones
     
-    public static double calculPression() throws InterruptedException
-    {          
-       // return ampTemperature * Math.sin(2 * 3.14 * temps /Le_Main.periode + dephasageTemp) + offsetTemperature + (Math.random()*rangTemperature - Math.random()*rangTemperature);
-        return 1000 +Math.random()*rangPression;
-    }  
 
    
     public void run()
@@ -41,7 +36,7 @@ public class Pression extends Thread {
                     recPress_.readyToWrite[3]==true )
             {
                 
-                recPress_.pression = Calculer();
+                recPress_.setPression(Calculer());
                 recPress_.readyToWrite[0]=false ;
                 recPress_.readyToWrite[1]=false ;
                 recPress_.readyToWrite[2]=false; 

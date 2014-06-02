@@ -7,9 +7,15 @@ import static java.lang.Thread.sleep;
  * @author S.Kleber et J.Ithurbide
  */
 public class SC_Temperature extends Thread {    
-    private Zone noZoneConcernee;
-
-    public SC_Temperature(Zone noZone){noZoneConcernee=noZone;}; //objet-membre de type Zone
+    
+    private ActuateurTemperature atcuTemp_;
+    private CapteurTemperature captTemp_;
+    
+    public SC_Temperature(ActuateurTemperature actuTemp,CapteurTemperature captTemp)
+    {
+        atcuTemp_=actuTemp;
+        captTemp_=captTemp;
+    } //objet-membre de type Zone
     
     public static double reglerActuateur(double valSeuil, double valCapteur){
         

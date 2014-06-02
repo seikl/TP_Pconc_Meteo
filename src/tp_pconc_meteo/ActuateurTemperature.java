@@ -10,24 +10,26 @@ package tp_pconc_meteo;
  *
  * @author jit
  */
-public class CapteurTemperature {
+
+
+public class ActuateurTemperature {
     
     private SC_Temperature scTemp_;
     public boolean readyToWrite_ = true;
-    private double temp_;
+    private double tempAModifier_;
     
-    CapteurTemperature()
+    ActuateurTemperature()
     {
-        temp_=0;
+        tempAModifier_=0;
     }
     
-    public void setTemp (double temp)
+    public void setTempToModify (double temp)
     {
-        temp_ = temp;
+        tempAModifier_ = temp;
     }
-    public double getTemp()
+    public double getTempToModify()
     {
-        return temp_;
+        return tempAModifier_;
     }
     
 }

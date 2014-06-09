@@ -21,6 +21,7 @@ public class ActuateurTemperature {
     ActuateurTemperature()
     {
         tempAModifier_=0;
+        System.out.println("Un actuateur a été activé ! \n");
     }
     
     public void setTempToModify (double temp)

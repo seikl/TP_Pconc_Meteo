@@ -19,6 +19,7 @@ public class CapteurTemperature {
     CapteurTemperature()
     {
         temp_=0.;
+        System.out.println("Un capteur a été activé ! \n");
     }
     
     public void setTemp (double temp)

@@ -1,7 +1,8 @@
 package tp_pconc_meteo;
 
 import static java.lang.Thread.sleep;
-
+import java.util.ArrayList;
+ 
 /**
  * code inspiré du JDemo 145 (Cours de O.B. - AprogOO)
  * @author S.Kleber et J.Ithurbide
@@ -12,17 +13,20 @@ public class SC_Temperature extends Thread {
     private CapteurTemperature captTemp_;
     private double temperatureRequise_;
     private double tempPiece_;
+    private ArrayList<Zone> lesZones = new ArrayList<Zone>();
     
-    public SC_Temperature(ActuateurTemperature actuTemp,CapteurTemperature captTemp,double temperatureRequise)
+    public SC_Temperature()
     {
-        atcuTemp_=actuTemp;
-        captTemp_=captTemp;
-        temperatureRequise_=temperatureRequise; 
+        
         
     } //objet-membre de type Zone
     void setTempRequise(double temp)
     {
         temperatureRequise_ = temp;
+    }
+    void addAZone(Zone laZone)
+    {
+        lesZones.add(laZone);
     }
 
     public void run()
@@ -31,27 +35,15 @@ public class SC_Temperature extends Thread {
       { 
         while( !isInterrupted() )            
         {         
-            if(captTemp_.readyToWrite_[0]==false || captTemp_.readyToWrite_[1]==false || captTemp_.readyToWrite_[2]==false || captTemp_.readyToWrite_[3]==false)
+            System.out.println("One more time from SC! \n");
+            for(int z=0;z<lesZones.size();z++)
             {
-                
-               
-                double delta = tempPiece_ - temperatureRequise_; 
-                //on a environ 30% de rendement pour un chauffage
-                if(atcuTemp_.readyToWrite_[0]==true && atcuTemp_.readyToWrite_[1]==true && atcuTemp_.readyToWrite_[2]==true && atcuTemp_.readyToWrite_[3]==true)
-                {
-
-                     atcuTemp_.readyToWrite_[0]=false;
-                     atcuTemp_.readyToWrite_[1]=false ;
-                     atcuTemp_.readyToWrite_[2]=false ;
-                     atcuTemp_.readyToWrite_[3]=false;
-                }
-                   
-              
-                captTemp_.readyToWrite_[0]=true;
-                captTemp_.readyToWrite_[1]=true ;
-                captTemp_.readyToWrite_[2]=true ;
-                captTemp_.readyToWrite_[3]=true;
-            }
+                System.out.println("take control of the zone number : "+z+" \n");
+                double deltaTemperature= lesZones.get(z).getTemperatureReference()-lesZones.get(z).TempCapteur_.getTemp();
+                //Il fait trop chaud. On doit refroidir/rechauffer avec un taux de 30% de rendement
+                lesZones.get(z).TempActuateur_.setTempToModify(0.3*deltaTemperature);
+    
+            }       
             sleep(1000);              
         }
       }

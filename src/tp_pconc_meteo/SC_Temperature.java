@@ -36,14 +36,15 @@ public class SC_Temperature extends Thread {
       { 
         while( !isInterrupted() )            
         {         
-            System.out.println("One more time from SC! \n");
+           // System.out.println("One more time from SC! \n");
             for(int noZone=0;noZone<lesZones.size();noZone++)
             {
                                     
-                System.out.println("take control of the zone number : "+noZone+" \n");
+                
                 double deltaTemperature= lesZones.get(noZone).getTemperatureReference()-lesZones.get(noZone).TempCapteur_.getTemp();
                 //Il fait trop chaud. On doit refroidir/rechauffer avec un taux de 30% de rendement
                 lesZones.get(noZone).TempActuateur_.setTempToModify(0.3*deltaTemperature);   
+               // System.out.println("the zone : "+noZone+" need to change temp to : " +deltaTemperature+"\n");
                 
             }       
             sleep(1000);              

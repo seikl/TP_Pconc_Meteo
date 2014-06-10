@@ -39,13 +39,13 @@ public class Zone extends Thread {
     @Override
     public void run() 
     {
-        System.out.println("One more time first! \n");
+        //System.out.println("One more time first! \n");
       try
       { 
         while( !isInterrupted() )
         {        
             //vérification si on peut récupérer la température extérieure
-            System.out.println("One more time! \n");
+            //System.out.println("One more time! \n");
             if (recTempZone_.readyToWrite[idZone_]==false)
             {    
                 double temperatureZone = TempCapteur_.getTemp();
@@ -55,10 +55,11 @@ public class Zone extends Thread {
                 
                 // on met a jour le capteur
                 TempCapteur_.setTemp(temperatureZone);
-                System.out.println("La tenperature pour la zone : " + idZone_+ "est maintenant de : " + temperatureZone+"\n");
+                System.out.println("La tenperature pour la zone : " + idZone_+ " est maintenant de : " + temperatureZone+"\n");
                  //indique que la zone est prête à recevoir une température
                 recTempZone_.readyToWrite[idZone_]=true;
             }
+             sleep(1000); 
         }
       }
       catch(Exception e)

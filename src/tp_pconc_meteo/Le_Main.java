@@ -21,15 +21,25 @@ public class Le_Main {
 
         //création des zone (No. de zone, facteur influence, récepteur Temperature)        
         Zone zone1 = new Zone(1, 0.5, recTemp);
+        Zone zone2 = new Zone(2, 0.5, recTemp);
+        Zone zone3 = new Zone(3, 0.5, recTemp);
+        Zone zone4 = new Zone(4, 0.5, recTemp);
         zone1.setTemperatureReference(23);
+        zone2.setTemperatureReference(23);
+        zone3.setTemperatureReference(23);
+        zone4.setTemperatureReference(23);
         //Zone zone3 = new Zone(3, 0.5, recTemp);
         //Zone zone2 = new Zone(2, 0.5, recTemp);
 
         
         SC_Temperature systemControlTemperature = new SC_Temperature();
         systemControlTemperature.addAZone(zone1);
+        systemControlTemperature.addAZone(zone2);        
+        systemControlTemperature.addAZone(zone3);
+        systemControlTemperature.addAZone(zone4);
         
-        
+        //démarrage du SC
+        systemControlTemperature.start();        
         //création des Threads température et SC qui partageront une ou plusieurs zones
         
        // Pression pression = new Pression(recPres);           

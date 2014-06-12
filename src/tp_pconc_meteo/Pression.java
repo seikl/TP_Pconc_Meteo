@@ -17,7 +17,6 @@ public class Pression extends Thread {
    
     static int rangPression = 2; 
     static int temps=0;
-    private Zone noZoneConcernee;
     RecepteurPression recPress_;
     
     public Pression(RecepteurPression recPress){recPress_=recPress;}; //objet-membre de type Zones
@@ -50,7 +49,7 @@ public class Pression extends Thread {
       catch(InterruptedException e)
       {
         System.out.println("InterruptedException dans run() de " +
-                           "Temperature !\n");
+                           "Pression !\n");
         return;
       }
     }    

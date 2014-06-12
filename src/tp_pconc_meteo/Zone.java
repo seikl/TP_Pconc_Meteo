@@ -9,21 +9,33 @@ public class Zone extends Thread {
     private double temperatureZone;
     private double pressionZone;
     private double humditeZone;
-    private double lumiereZone;
+    private int lumiereZone;
     
     private RecepteurTemperature recTempZone_;
-    public CapteurTemperature TempCapteur_= new CapteurTemperature();
-    public ActuateurTemperature TempActuateur_= new ActuateurTemperature();
+    private RecepteurLumiere recLumZone_;
     private RecepteurPression recPresZone_;
+    public CapteurTemperature TempCapteur_= new CapteurTemperature();
+    public CapteurLumiere LumCapteur_ = new CapteurLumiere();
+    public CapteurPression PressionCapteur_ =  new CapteurPression();
+    public ActuateurTemperature TempActuateur_= new ActuateurTemperature();
+    public ActuateurLumiere LumActuateur_ = new ActuateurLumiere();
+    public ActuateurPression PressionActuateur_ = new ActuateurPression();
+    
     private int idZone_;
     private double etatZone_ = 0.;
     private double influenceTemperatureExt_ = 0.4;
+    private double influenceLumiereExt_ = 0.33;
+    private double influencePressionExt_ = 0.27;
     private double influcenceInt_ = 0.5;
     private double temperatureReference=0.0;
+    private double pressionReference = 0.0;
+    private double lumiereReference = 0.0;
             
-    public Zone (int idZone, double infInt, RecepteurTemperature recTempZone)
+    public Zone (int idZone, double infInt, RecepteurTemperature recTempZone,RecepteurLumiere recLumZone,RecepteurPression recPressionZone)
     {
         recTempZone_ = recTempZone;
+        recLumZone_ = recLumZone;
+        recPresZone_ = recPressionZone;
         idZone_ = idZone;
         influcenceInt_ = infInt;
     }
@@ -34,6 +46,22 @@ public class Zone extends Thread {
      public void setTemperatureReference(double temp)
     {
          temperatureReference=temp;
+    }
+    public double getLumiereReference()
+    {
+        return lumiereReference;
+    }
+     public void setLumiereReference(double lum)
+    {
+         lumiereReference=lum;
+    }
+     public double getPressionReference()
+    {
+        return pressionReference;
+    }
+     public void setPressionReference(double pression)
+    {
+         pressionReference=pression;
     }
 
     @Override
@@ -58,6 +86,25 @@ public class Zone extends Thread {
                 System.out.println("La tenperature pour la zone : " + idZone_+ " est maintenant de : " + temperatureZone+"\n");
                  //indique que la zone est prête à recevoir une température
                 recTempZone_.readyToWrite[idZone_]=true;
+            }
+            if(recLumZone_.readyToWrite [idZone_]==false)
+            {
+                double lumiereZone = LumCapteur_.getLum();
+                
+                lumiereZone = lumiereZone + influenceLumiereExt_*( recLumZone_.getLum()) + LumActuateur_.getLumToModify();
+                LumCapteur_.setLum (lumiereZone);
+                
+                System.out.println("La lumiere pour la zone : " + idZone_+ " est maintenant de : " + lumiereZone+"\n");
+                recLumZone_.readyToWrite [idZone_]=true;
+            }
+            if(recPresZone_.readyToWrite [idZone_]==false)
+            {
+                double pressionZone = PressionCapteur_.getPression();
+                
+                pressionZone = pressionZone + influencePressionExt_*( recPresZone_.getPression()) + PressionActuateur_.getPressionToModify();
+                PressionCapteur_.setPression(pressionZone);
+                System.out.println("La pression pour la zone : " + idZone_+ " est maintenant de : " + pressionZone+"\n");
+                recPresZone_.readyToWrite [idZone_]=true;
             }
              sleep(1000); 
         }

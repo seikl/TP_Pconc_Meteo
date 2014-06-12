@@ -10,24 +10,23 @@ package tp_pconc_meteo;
  *
  * @author jit
  */
-public class CapteurTemperature {
-   
+public class CapteurLumiere {
+    private SC_Temperature scTemp_;
     public boolean readyToWrite_ = true;  
-    private double temp_;
+    private double lum_;
     
-    CapteurTemperature()
+    CapteurLumiere()
     {
-        temp_=0.;
-        System.out.println("Un capteur a été activé ! \n");
+        lum_=0.;
+        System.out.println("Un capteur de lumiere a été activé ! \n");
     }
     
-    public void setTemp (double temp)
+    public void setLum (double lum)
     {
-        temp_ = temp;
+        lum_ = lum;
     }
-    public double getTemp()
+    public double getLum()
     {
-        return temp_;
+        return lum_;
     }
-    
 }

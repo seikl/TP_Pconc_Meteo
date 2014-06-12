@@ -10,24 +10,25 @@ package tp_pconc_meteo;
  *
  * @author jit
  */
-public class CapteurTemperature {
-   
+public class CapteurPression {
+    
     public boolean readyToWrite_ = true;  
-    private double temp_;
+    private double pression_;
     
-    CapteurTemperature()
+    CapteurPression()
     {
-        temp_=0.;
-        System.out.println("Un capteur a été activé ! \n");
+        pression_=0.;
+        System.out.println("Un capteur de pression a été activé ! \n");
     }
     
-    public void setTemp (double temp)
+    public void setPression (double pression)
     {
-        temp_ = temp;
+        pression_ = pression;
     }
-    public double getTemp()
+    public double getPression()
     {
-        return temp_;
+        return pression_;
     }
+    
     
 }

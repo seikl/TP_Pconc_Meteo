@@ -13,15 +13,13 @@ package tp_pconc_meteo;
 
 
 public class ActuateurTemperature {
-    
-    private SC_Temperature scTemp_;
     public boolean readyToWrite_ = true;  
     private double tempAModifier_;
     
     ActuateurTemperature()
     {
         tempAModifier_=0;
-        System.out.println("Un actuateur a été activé ! \n");
+        System.out.println("Un actuateur de temperature a été activé ! \n");
     }
     
     public void setTempToModify (double temp)

@@ -5,7 +5,6 @@
  */
 
 package tp_pconc_meteo;
-
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 
@@ -13,22 +12,22 @@ import java.util.ArrayList;
  *
  * @author jit
  */
-public class SC_Pression extends Thread{
-     private ActuateurPression atcuPression_;
-    private CapteurPression captPression_;
-    private double pressionRequise_;
-    private double pressionPiece_;
+public class SC_Lumiere  extends Thread{
+    private ActuateurLumiere atcuLum_;
+    private CapteurLumiere captLum_;
+    private double LumiereRequise_;
+    private double LumPiece_;
     private ArrayList<Zone> lesZones = new ArrayList<Zone>();
     private int noZone=0;
     
-    public SC_Pression()
+    public SC_Lumiere()
     {
         
         
     } //objet-membre de type Zone
-    void setPressionRequise(double pression)
+    void setLumRequise(double lum)
     {
-        pressionRequise_ = pression;
+        LumiereRequise_ = lum;
     }
     void addAZone(Zone laZone)
     {
@@ -46,9 +45,9 @@ public class SC_Pression extends Thread{
             {
                                     
                 
-                double deltaPression= lesZones.get(noZone).getPressionReference()-lesZones.get(noZone).PressionCapteur_.getPression() ;
+                double deltaLumiere= lesZones.get(noZone).getLumiereReference()-lesZones.get(noZone).PressionCapteur_.getPression();
                 //Il fait trop chaud. On doit refroidir/rechauffer avec un taux de 30% de rendement
-                lesZones.get(noZone).PressionActuateur_.setPressionToModify(0.3*deltaPression); 
+                lesZones.get(noZone).LumActuateur_.setLumToModify(0.3*deltaLumiere); 
                // System.out.println("the zone : "+noZone+" need to change temp to : " +deltaTemperature+"\n");
                 
             }       
@@ -58,8 +57,9 @@ public class SC_Pression extends Thread{
       catch(InterruptedException e)
       {
         System.out.println("InterruptedException dans run() de " +
-                           "SC_Temperature !\n");
+                           "SC_Lumiere !\n");
         return;
       }
     }  
+    
 }

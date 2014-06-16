@@ -12,18 +12,21 @@ import static java.lang.Thread.sleep;
  *
  * @author jit
  */
-public class Pression extends Thread {
+public class Pression extends Phenomenes {
     
    
     static int rangPression = 2; 
     static int temps=0;
     RecepteurPression recPress_;
+    Timer leTemp_;
+    int min=10;
+    int max = 10;
     
-    public Pression(RecepteurPression recPress){recPress_=recPress;}; //objet-membre de type Zones
+    public Pression(RecepteurPression recPress, Timer temp){recPress_=recPress; leTemp_=temp;}; //objet-membre de type Zones
     
 
    
-    public void run()
+    public synchronized void run()
     { 
       try
       { 
@@ -41,8 +44,12 @@ public class Pression extends Thread {
                 recPress_.readyToWrite[2]=false; 
                 recPress_.readyToWrite[3]=false; 
             }
+            else
+            {
+                wait();
+            }
           
-          temps++;
+          
           sleep(2000);
         }
       }
@@ -55,7 +62,9 @@ public class Pression extends Thread {
     }    
 
     public double Calculer() throws InterruptedException {
-         return 1000 +Math.random()*rangPression;
+        int ii = -min + (int) (Math.random() * ((max - (-min)) + 1));
+        //System.out.println("le random pression vaut :" + ii);
+         return 1000 +ii;
     }
     
 }

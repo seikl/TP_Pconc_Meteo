@@ -10,14 +10,18 @@ package tp_pconc_meteo;
  *
  * @author jit
  */
-public class Lumiere extends Thread{
+public class Lumiere extends Phenomenes{
     
-    static int temps=0;
     private RecepteurLumiere recLum_;
-    
-    public Lumiere(RecepteurLumiere recLum){recLum_=recLum;}; //objet-membre de type Zones
+    Timer leTemp_;
+    public double valMax = 30000;
+    private double a1 = 100;
+    private double a2 = -80;
+    int min=10;
+    int max = 10;
+    public Lumiere(RecepteurLumiere recLum, Timer temp){recLum_=recLum; leTemp_=temp;}; //objet-membre de type Zones
 
-    public void run()
+    public synchronized void run()
     { 
       try
       { 
@@ -35,7 +39,10 @@ public class Lumiere extends Thread{
                 recLum_.readyToWrite[2]=false; 
                 recLum_.readyToWrite[3]=false; 
             }
-          temps++;
+            else
+            {
+                wait();
+            }
           sleep(2000);
         }
       }
@@ -48,9 +55,33 @@ public class Lumiere extends Thread{
     }    
 
 
-    public int Calculer() throws InterruptedException {
-      return 10;
+    public double Calculer() throws InterruptedException {
+      
+       double localLumi =0.; 
+       int random = -min + (int) (Math.random() * ((max - (-min)) + 1));
+       System.out.println("le random lumiere vaut : " + random);
+       if (leTemp_.temp_ <300)
+       {
+          localLumi =0;
+       }
+       else if (leTemp_.temp_<600)
+       {
+          localLumi= a1*(leTemp_.temp_ -300)-random;
+       }
+        else if (leTemp_.temp_<1080)
+       {
+           localLumi=valMax -random;
+       }
+        else if (leTemp_.temp_<1320)
+       {
+           localLumi= valMax + a2*(leTemp_.temp_-1080) - random;
+       }
+        else if (leTemp_.temp_<1440)
+       {
+           localLumi =0;
+       }
+       return localLumi;
 
     }
-    
+
 }

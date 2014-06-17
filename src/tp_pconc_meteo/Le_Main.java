@@ -22,40 +22,46 @@ public class Le_Main {
         RecepteurTemperature recTemp = new RecepteurTemperature();
         RecepteurPression recPres = new RecepteurPression();
         RecepteurLumiere recLum = new RecepteurLumiere();
+        RecepteurHumidite recHumy = new RecepteurHumidite();
         Temperature externalTemp = new Temperature(recTemp, leTemp);
         Pression externalPression = new Pression(recPres,leTemp);
-        Lumiere externalLumiere = new Lumiere(recLum,leTemp
+        Lumiere externalLumiere = new Lumiere(recLum,leTemp);
+        Humidite externalHumidity = new Humidite(recHumy,leTemp);
         
-        
-        
-        
-        
-        
-        
-        );
         //System.out.println("hello world!");
 
         //création des zone (No. de zone, facteur influence, récepteur Temperature)        
-        Zone zone1 = new Zone(0, 0.5, recTemp,recLum,recPres);
-        Zone zone2 = new Zone(1, 0.5, recTemp,recLum,recPres);
-        Zone zone3 = new Zone(2, 0.5, recTemp,recLum,recPres);
-        Zone zone4 = new Zone(3, 0.5, recTemp,recLum,recPres);
+        Zone zone1 = new Zone(0, 0.5, recTemp,recLum,recPres,recHumy);
+        Zone zone2 = new Zone(1, 0.5, recTemp,recLum,recPres,recHumy);
+        Zone zone3 = new Zone(2, 0.5, recTemp,recLum,recPres,recHumy);
+        Zone zone4 = new Zone(3, 0.5, recTemp,recLum,recPres,recHumy);
         zone1.setTemperatureReference(23);
         zone1.setLumiereReference(20);
         zone1.setPressionReference(1000);
+        zone1.setHumidityReference(40);
+        
         zone2.setTemperatureReference(23);
         zone2.setLumiereReference(20);
         zone2.setPressionReference(1000);
+        zone2.setHumidityReference(40);
+        
         zone3.setTemperatureReference(23);
         zone3.setLumiereReference(20);
         zone3.setPressionReference(1000);
+        zone3.setHumidityReference(40);
+        
         zone4.setTemperatureReference(23);
         zone4.setLumiereReference(20);
         zone4.setPressionReference(1000);
+        zone4.setHumidityReference(40);
 
         
         
-
+        SC_Humidite systemControlHumidity = new SC_Humidite();
+        systemControlHumidity.addAZone(zone1);
+        systemControlHumidity.addAZone(zone2);        
+        systemControlHumidity.addAZone(zone3);
+        systemControlHumidity.addAZone(zone4);
         
         SC_Temperature systemControlTemperature = new SC_Temperature();
         systemControlTemperature.addAZone(zone1);
@@ -85,10 +91,12 @@ public class Le_Main {
         externalTemp.start();
         externalPression.start();
         externalLumiere.start();
+        externalHumidity.start();
         
         systemControlTemperature.start();  
         systemControlLumiere.start();
         systemControlPression.start();
+        systemControlHumidity.start();
         //création des Threads température et SC qui partageront une ou plusieurs zones
         
        // Pression pression = new Pression(recPres);           

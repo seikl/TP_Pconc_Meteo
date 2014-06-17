@@ -14,30 +14,44 @@ public class Zone extends Thread {
     private RecepteurTemperature recTempZone_;
     private RecepteurLumiere recLumZone_;
     private RecepteurPression recPresZone_;
+    private RecepteurHumidite recHumidityZone_;
     public CapteurTemperature TempCapteur_= new CapteurTemperature();
     public CapteurLumiere LumCapteur_ = new CapteurLumiere();
     public CapteurPression PressionCapteur_ =  new CapteurPression();
+    public CapteurHumidite HumiditeCapteur = new CapteurHumidite();
     public ActuateurTemperature TempActuateur_= new ActuateurTemperature();
     public ActuateurLumiere LumActuateur_ = new ActuateurLumiere();
     public ActuateurPression PressionActuateur_ = new ActuateurPression();
+    public ActuateurHumidite HumititeActuateur = new ActuateurHumidite();
     
     private int idZone_;
     private double etatZone_ = 0.;
     private double influenceTemperatureExt_ = 0.4;
     private double influenceLumiereExt_ = 0.33;
     private double influencePressionExt_ = 0.27;
+    private double influenceHumiditeExt_ = 0.18;
     private double influcenceInt_ = 0.5;
     private double temperatureReference=0.0;
     private double pressionReference = 0.0;
     private double lumiereReference = 1200.0;
+    private double humiditeReference = 80.0;
             
-    public Zone (int idZone, double infInt, RecepteurTemperature recTempZone,RecepteurLumiere recLumZone,RecepteurPression recPressionZone)
+    public Zone (int idZone, double infInt, RecepteurTemperature recTempZone,RecepteurLumiere recLumZone,RecepteurPression recPressionZone, RecepteurHumidite recepteurHumidite)
     {
         recTempZone_ = recTempZone;
         recLumZone_ = recLumZone;
         recPresZone_ = recPressionZone;
+        recHumidityZone_ = recepteurHumidite;
         idZone_ = idZone;
         influcenceInt_ = infInt;
+    }
+    public double getHumidityReference()
+    {
+        return humiditeReference;
+    }
+     public void setHumidityReference(double humidite)
+    {
+         humiditeReference=humidite;
     }
     public double getTemperatureReference()
     {
@@ -74,6 +88,26 @@ public class Zone extends Thread {
         {        
             //vérification si on peut récupérer la température extérieure
             //System.out.println("One more time! \n");
+            if (recHumidityZone_.readyToWrite[idZone_]==false)
+            {    
+                double humiditeZone = HumiditeCapteur.getHumidity();
+                //mise à jour de l'etat de La Zone
+              //  etatZone_ = etatZone_ + influenceTemperatureExt_ * (recTempZone_.getTemp() - etatZone_)+ TempCapteur_.getTemp() * ( TempActuateur_.getTempToModify() - etatZone_);
+                humiditeZone = humiditeZone +influenceHumiditeExt_ * (recHumidityZone_.getHumidity()-humiditeZone) + HumititeActuateur.getHumidityToModify();
+                
+                // on met a jour le capteur
+                HumiditeCapteur.setHumidity(humiditeZone);
+                System.out.println("L humidite pour la zone : " + idZone_+ " est maintenant de : " + humiditeZone+"\n");
+                 //indique que la zone est prête à recevoir une température
+                recHumidityZone_.readyToWrite[idZone_]=true;
+                 if(recHumidityZone_.readyToWrite[0]==true &&  
+                    recHumidityZone_.readyToWrite[1]==true &&
+                    recHumidityZone_.readyToWrite[2]==true &&
+                    recHumidityZone_.readyToWrite[3]==true )
+                {
+                    notifyAll();
+                }
+            }
             if (recTempZone_.readyToWrite[idZone_]==false)
             {    
                 double temperatureZone = TempCapteur_.getTemp();
